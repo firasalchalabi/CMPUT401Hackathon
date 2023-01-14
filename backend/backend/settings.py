@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'database.User'
+
 
 # Application definition
 
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'database',
-    'rest_framework',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
