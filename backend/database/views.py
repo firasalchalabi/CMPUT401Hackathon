@@ -20,3 +20,4 @@ class ItemView(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
     queryset = Item.objects.all()
 
+

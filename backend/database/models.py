@@ -16,6 +16,3 @@ class Item(models.Model):
     completed = models.BooleanField(default=False)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
 
-
-
-

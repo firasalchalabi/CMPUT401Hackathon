@@ -15,3 +15,4 @@ class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
         fields = ['id', 'description', 'completed', 'trip_id']
+
