@@ -9,8 +9,11 @@ import TodoForm from "./components/TodoForm";
 function App() {
   const [todos, setTodos] = useState([]);
 
+  const userId = 4;
+  const tripId = 1;
+
   useEffect(() => {
-    axios.get("/api/planner/")
+    axios.get(`/api/users/${userId}/trips/${tripId}`)
       .then((res) => {
         setTodos(res.data)
       }).catch(() => {

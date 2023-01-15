@@ -6,23 +6,26 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 
 export default function TodoForm({ todos, setTodos }) {
-    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+
+    const userId = 4;
+    const tripId = 1;
 
     const handleChange = e => {
-        setName(e.target.value);
+        setDescription(e.target.value);
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (!name) {
+        if (!description) {
             alert("Please provide a valid value for todo");
             return;
         }
 
-        axios.post("/api/planner/", {
-            name: name
+        axios.post(`/api/users/${userId}/trips/${tripId}`, {
+            "description": description
         }).then((res) => {
-            setName("");
+            setDescription("");
             const { data } = res;
             setTodos([
                 ...todos,
@@ -37,7 +40,7 @@ export default function TodoForm({ todos, setTodos }) {
         <InputGroup className="mb-4">
             <FormControl placeholder="New Todo"
                 onChange={handleChange}
-                value={name}
+                value={description}
             />
             <Button type="submit">
                 Add
