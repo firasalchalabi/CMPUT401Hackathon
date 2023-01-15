@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup"
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
@@ -10,12 +10,15 @@ export default function TodoList({ todos = [], setTodos }) {
     const [show, setShow] = useState(false);
     const [record, setRecord] = useState(null);
 
+    const userId = 4;
+    const tripId = 1;
+
     const handleClose = () => {
         setShow(false);
     }
 
     const handleDelete = (id) => {
-        axios.delete(`/api/planner/${id}/`)
+        axios.delete(`/api/users/${userId}/trips/${tripId}/${id}`)
             .then(() => {
                 const newTodos = todos.filter(t => {
                     return t.id !== id
@@ -26,8 +29,8 @@ export default function TodoList({ todos = [], setTodos }) {
             })
     }
 
-    const handleUpdate = async (id, value) => {
-        return axios.patch(`/api/planner/${id}/`, value)
+    const handleUpdate = async (id) => {
+        return axios.put(`/api/users/${userId}/trips/${tripId}/${id}`)
             .then((res) => {
                 const { data } = res;
                 const newTodos = todos.map(t => {
@@ -48,14 +51,12 @@ export default function TodoList({ todos = [], setTodos }) {
                 <span style={{
                     marginRight: "12px", cursor: "pointer"
                 }} onClick={() => {
-                    handleUpdate(t.id, {
-                        completed: !t.completed
-                    })
+                    handleUpdate(t.id)
                 }}>
                     {t.completed === true ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
                 </span>
                 <span>
-                    {t.name}
+                    {t.description}
                 </span>
             </div>
             <div>
@@ -78,12 +79,12 @@ export default function TodoList({ todos = [], setTodos }) {
     const handleChange = (e) => {
         setRecord({
             ...record,
-            name: e.target.value
+            description: e.target.value
         })
     }
 
     const handleSaveChanges = async () => {
-        await handleUpdate(record.id, { name: record.name });
+        await handleUpdate(record.id, { description: record.description });
         handleClose();
     }
 
@@ -108,7 +109,7 @@ export default function TodoList({ todos = [], setTodos }) {
                 <Modal.Title>Edit Todo</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <FormControl value={record ? record.name : ""}
+                <FormControl value={record ? record.description : ""}
                     onChange={handleChange}
                 />
             </Modal.Body>
