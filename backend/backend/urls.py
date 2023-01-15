@@ -28,6 +28,6 @@ urlpatterns = [
     path("api/", include(router.urls)),
     path("api/users/<int:user_id>/trips", TripView.as_view({"get":"get_trips"})),
     path("api/users/<int:user_id>/trips/<int:trip_id>", ItemView.as_view({"get": "get_items", "post":"create_item"})),
-    path("api/users/<int:user_id>/trips/<int:trip_id>/<int:item_id>", ItemView.as_view({"put":"check_item", "delete":"delete_item"}))
+    path("api/users/<int:user_id>/trips/<int:trip_id>/<int:item_id>", ItemView.as_view({"put":"update_item", "delete":"delete_item"}))
 
 ]

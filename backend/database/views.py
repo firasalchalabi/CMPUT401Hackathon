@@ -34,10 +34,11 @@ class ItemView(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
-    def check_item(self, request, *args, **kwargs):
+    def update_item(self, request, *args, **kwargs):
         item_id = kwargs["item_id"]
         item = Item.objects.get(id=item_id)
-        item.completed = not item.completed
+        item.completed = request.data["completed"] if "completed" in request.data else not item.completed
+        item.description = request.data["description"] if "description" in request.data else item.description
         item.save()
 
         return Response(ItemSerializer(item).data, status=status.HTTP_204_NO_CONTENT)

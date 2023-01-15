@@ -29,8 +29,8 @@ export default function TodoList({ todos = [], setTodos }) {
             })
     }
 
-    const handleUpdate = async (id) => {
-        return axios.put(`/api/users/${userId}/trips/${tripId}/${id}`)
+    const handleUpdate = async (id, value) => {
+        return axios.put(`/api/users/${userId}/trips/${tripId}/${id}`, value)
             .then((res) => {
                 const { data } = res;
                 const newTodos = todos.map(t => {
@@ -84,7 +84,7 @@ export default function TodoList({ todos = [], setTodos }) {
     }
 
     const handleSaveChanges = async () => {
-        await handleUpdate(record.id, { description: record.description });
+        await handleUpdate(record.id, { description: record.description, completed: record.completed });
         handleClose();
     }
 
@@ -93,16 +93,16 @@ export default function TodoList({ todos = [], setTodos }) {
 
     return <div>
         <div className="mb-2 mt-4">
-            Unpacked Items ({incompleteTodos.length})
-        </div>
-        <ListGroup>
-            {incompleteTodos.map(renderListGroupItem)}
-        </ListGroup>
-        <div className="mb-2 mt-4">
-            Packed Items ({completedTodos.length})
+            To do ({completedTodos.length})
         </div>
         <ListGroup>
             {completedTodos.map(renderListGroupItem)}
+        </ListGroup>
+        <div className="mb-2 mt-4">
+            Done ({incompleteTodos.length})
+        </div>
+        <ListGroup>
+            {incompleteTodos.map(renderListGroupItem)}
         </ListGroup>
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
